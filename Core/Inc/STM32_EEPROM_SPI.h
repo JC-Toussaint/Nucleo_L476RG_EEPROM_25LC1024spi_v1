@@ -26,7 +26,7 @@ extern "C" {
 
 #define EEPROM_PAGESIZE        256   /*!< Pagesize according to documentation  */
                                      /*!< 256 for 25LC1024 */
-#define EEPROM_BUFFER_SIZE     32    /*!< EEPROM Buffer size. Setup to your needs */
+//#define EEPROM_BUFFER_SIZE     32    /*!< EEPROM Buffer size. Setup to your needs */
 
 #define EEPROM_CS_HIGH()    HAL_GPIO_WritePin(EEPROM_CS_GPIO_Port, EEPROM_CS_Pin, GPIO_PIN_SET)
 #define EEPROM_CS_LOW()     HAL_GPIO_WritePin(EEPROM_CS_GPIO_Port, EEPROM_CS_Pin, GPIO_PIN_RESET)
@@ -35,8 +35,8 @@ extern "C" {
  * @brief EEPROM Operations statuses
  */
 typedef enum {
-    EEPROM_STATUS_PENDING,
     EEPROM_STATUS_COMPLETE,
+    EEPROM_STATUS_PENDING,
     EEPROM_STATUS_ERROR
 } EEPROM_Status;
 

@@ -22,8 +22,6 @@
 #include "STM32_EEPROM_SPI.h"
 
 SPI_HandleTypeDef * EEPROM_SPI;
-uint8_t EEPROM_StatusByte;
-uint8_t RxBuffer[EEPROM_BUFFER_SIZE] = {0x00};
 
 /**
  * @brief Init EEPROM SPI
@@ -72,7 +70,7 @@ EEPROM_Status EEPROM_SPI_WritePage(uint8_t* pBuffer, uint32_t WriteAddr, uint16_
 
     // Make 5 attempts to write the data
     for (uint8_t i = 0; i < 5; i++) {
-        spiTransmitStatus = HAL_SPI_Transmit(EEPROM_SPI, pBuffer, NumByteToWrite, 100);
+        spiTransmitStatus = HAL_SPI_Transmit(EEPROM_SPI, pBuffer, NumByteToWrite, HAL_TIMEOUT);
 
         if (spiTransmitStatus == HAL_BUSY) {
             HAL_Delay(5);
@@ -245,7 +243,7 @@ EEPROM_Status EEPROM_SPI_ReadBuffer(uint8_t* pBuffer, uint32_t ReadAddr, uint16_
     /* Send WriteAddr address byte to read from */
     EEPROM_SPI_SendInstruction(header, 4);
 
-    while (HAL_SPI_Receive(EEPROM_SPI, (uint8_t*)pBuffer, NumByteToRead, 200) == HAL_BUSY) {
+    while (HAL_SPI_Receive(EEPROM_SPI, (uint8_t*)pBuffer, NumByteToRead, HAL_TIMEOUT) == HAL_BUSY) {
         HAL_Delay(1);
     };
 
@@ -271,7 +269,7 @@ uint8_t EEPROM_SendByte(uint8_t byte) {
     }
 
     /* Send byte through the SPI peripheral */
-    if (HAL_SPI_Transmit(EEPROM_SPI, &byte, 1, 200) != HAL_OK) {
+    if (HAL_SPI_Transmit(EEPROM_SPI, &byte, 1, HAL_TIMEOUT) != HAL_OK) {
         Error_Handler();
     }
 
@@ -281,7 +279,7 @@ uint8_t EEPROM_SendByte(uint8_t byte) {
     }
 
     /* Return the byte read from the SPI bus */
-    if (HAL_SPI_Receive(EEPROM_SPI, &answerByte, 1, 200) != HAL_OK) {
+    if (HAL_SPI_Receive(EEPROM_SPI, &answerByte, 1, HAL_TIMEOUT) != HAL_OK) {
         Error_Handler();
     }
 
@@ -340,7 +338,7 @@ uint8_t sEE_ReadStatusRegister(void) {
     // Send "Write Status Register" instruction
     EEPROM_SPI_SendInstruction((uint8_t*)command, 1);
 
-    while (HAL_SPI_Receive(EEPROM_SPI, &status, 1, 200) == HAL_BUSY) {
+    while (HAL_SPI_Receive(EEPROM_SPI, &status, 1, HAL_TIMEOUT) == HAL_BUSY) {
         HAL_Delay(1);
     };
 
@@ -400,7 +398,7 @@ uint8_t EEPROM_SPI_WaitStandbyState(void) {
     // Loop as long as the memory is busy with a write cycle
     do {
 
-        while (HAL_SPI_Receive(EEPROM_SPI, (uint8_t*)sEEstatus, 1, 200) == HAL_BUSY) {
+        while (HAL_SPI_Receive(EEPROM_SPI, (uint8_t*)sEEstatus, 1, HAL_TIMEOUT) == HAL_BUSY) {
             HAL_Delay(1);
         };
 
@@ -425,7 +423,7 @@ void EEPROM_SPI_SendInstruction(uint8_t *instruction, uint8_t size) {
         HAL_Delay(1);
     }
 
-    if (HAL_SPI_Transmit(EEPROM_SPI, (uint8_t*)instruction, (uint16_t)size, 200) != HAL_OK) {
+    if (HAL_SPI_Transmit(EEPROM_SPI, (uint8_t*)instruction, (uint16_t)size, HAL_TIMEOUT) != HAL_OK) {
         Error_Handler();
     }
 }
