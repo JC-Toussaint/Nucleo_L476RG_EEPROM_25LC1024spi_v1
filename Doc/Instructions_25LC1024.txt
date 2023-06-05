@@ -1,0 +1,11 @@
+READ  0000 0011 = 0x03 Read data from memory array beginning at selected address
+WRITE 0000 0010 = 0x02 Write data to memory array beginning at selected address
+WREN  0000 0110 = 0x06 Set the write enable latch (enable write operations)
+WRDI  0000 0100 = 0x04 Reset the write enable latch (disable write operations)
+RDSR  0000 0101 = 0x05 Read STATUS register
+WRSR  0000 0001 = 0x01 Write STATUS register
+PE    0100 0010 = 0x42 Page Erase – erase one page in memory array
+SE    1101 1000 = 0xD8 Sector Erase – erase one sector in memory array
+CE    1100 0111 = 0xC7 Chip Erase – erase all sectors in memory array
+RDID  1010 1011 = 0xAB Release from Deep power-down and read electronic signature
+DPD   1011 1001 = 0xB9 Deep Power-Down mode
