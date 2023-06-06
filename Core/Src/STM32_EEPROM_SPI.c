@@ -1,10 +1,15 @@
 /**
- * Copyright Nikita Bulaev 2017-2019
- * adapted to MCP 25LC1024 EEPROM by JC Toussaint 2023
+ * Original driver developed by Nikita Bulaev (C)2017-2019
+ * for ST M95640-W EEPROM which uses 13-bit memory addressing
+ *
+ * Adapted by Jean-Christophe Toussaint Grenoble-INP Phelma in 2023 to MCP 25LC1024 EEPROM.
+ * It uses 24-bit memory addressing. So three bytes are needed, starting with the most significant byte 
+ * followed by the middle and the least significant byte.
  *
  * Some parts of this lib is taken from STM32 StdPerif libriary
  * stm32l152d_eval_spi_ee.c and adopted for the HAL.
  *
+ The M95640-W EEPROM uses 13-bit memory addressing, 
  * THIS SOFTWARE IS PROVIDED "AS IS"
  * AND ANY EXPRESS, IMPLIED OR STATUTORY WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
