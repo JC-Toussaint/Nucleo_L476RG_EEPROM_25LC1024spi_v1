@@ -9,7 +9,6 @@
  * Some parts of this lib is taken from STM32 StdPerif libriary
  * stm32l152d_eval_spi_ee.c and adopted for the HAL.
  *
- The M95640-W EEPROM uses 13-bit memory addressing, 
  * THIS SOFTWARE IS PROVIDED "AS IS"
  * AND ANY EXPRESS, IMPLIED OR STATUTORY WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
